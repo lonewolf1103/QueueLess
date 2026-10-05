@@ -73,6 +73,16 @@ const loginController = async (req, res) => {
     maxAge: 24 * 60 * 60 * 1000,
   });
 
+  const cookieHeader = res.getHeader("Set-Cookie");
+
+console.log(
+    "Generated cookie attributes:",
+    cookieHeader?.[0]?.replace(
+        /token=[^;]+/,
+        "token=[REDACTED]"
+    )
+);
+
   return res.status(200).json({
     message: "Login successfully",
     user: {
