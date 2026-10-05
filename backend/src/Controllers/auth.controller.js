@@ -75,13 +75,18 @@ const loginController = async (req, res) => {
 
   const cookieHeader = res.getHeader("Set-Cookie");
 
-console.log(
-    "Generated cookie attributes:",
-    cookieHeader?.[0]?.replace(
-        /token=[^;]+/,
-        "token=[REDACTED]"
-    )
-);
+
+const rawCookie = Array.isArray(cookieHeader)
+    ? cookieHeader[0]
+    : cookieHeader;
+
+const cookieAttributes = rawCookie
+    ?.split(";")
+    .slice(1)
+    .join(";")
+    .trim();
+
+console.log("Cookie attributes:", cookieAttributes);
 
   return res.status(200).json({
     message: "Login successfully",
