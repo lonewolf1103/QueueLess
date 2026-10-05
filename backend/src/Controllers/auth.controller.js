@@ -64,29 +64,23 @@ const loginController = async (req, res) => {
     },
   );
 
-  console.log("NODE_ENV:", JSON.stringify(process.env.NODE_ENV));
+  
+
+  // res.cookie("token", token, {
+  //   httpOnly: true,
+  //   secure: process.env.NODE_ENV === "production",
+  //   sameSite: process.env.NODE_ENV === "prodcution" ? "none" : "lax",
+  //   maxAge: 24 * 60 * 60 * 1000,
+  // });
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "prodcution" ? "none" : "lax",
+    secure: true,
+    sameSite: "none",
     maxAge: 24 * 60 * 60 * 1000,
-  });
-
-  const cookieHeader = res.getHeader("Set-Cookie");
+});
 
 
-const rawCookie = Array.isArray(cookieHeader)
-    ? cookieHeader[0]
-    : cookieHeader;
-
-const cookieAttributes = rawCookie
-    ?.split(";")
-    .slice(1)
-    .join(";")
-    .trim();
-
-console.log("Cookie attributes:", cookieAttributes);
 
   return res.status(200).json({
     message: "Login successfully",
