@@ -64,23 +64,13 @@ const loginController = async (req, res) => {
     },
   );
 
-  
-
-  // res.cookie("token", token, {
-  //   httpOnly: true,
-  //   secure: process.env.NODE_ENV === "production",
-  //   sameSite: process.env.NODE_ENV === "prodcution" ? "none" : "lax",
-  //   maxAge: 24 * 60 * 60 * 1000,
-  // });
-
   res.cookie("token", token, {
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    partitioned: true,
     maxAge: 24 * 60 * 60 * 1000,
-});
-
-
+  });
 
   return res.status(200).json({
     message: "Login successfully",
@@ -94,17 +84,16 @@ const loginController = async (req, res) => {
 };
 
 const logoutController = async (req, res) => {
-    
   res.clearCookie("token", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: true,
+    sameSite: "none",
+    partitioned: true,
   });
 
   return res.status(200).json({
     message: "User logged out successfully",
   });
-
 };
 
 module.exports = {
