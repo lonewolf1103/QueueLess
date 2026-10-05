@@ -64,6 +64,8 @@ const loginController = async (req, res) => {
     },
   );
 
+  console.log("NODE_ENV:", JSON.stringify(process.env.NODE_ENV));
+
   res.cookie("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
